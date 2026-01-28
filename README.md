@@ -11,10 +11,15 @@
 ## Tech Stack
 
 - postgres
-- Knex.js
+- Kysely
 - Express.js
+- TypeScript
 
 ## Ports
 
 - Express: 3030
-- DB: 5435
+- DB: 543
+
+### Testing Server Connection
+
+`curl http://localhost:3030`
