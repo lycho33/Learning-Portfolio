@@ -1,6 +1,7 @@
+import dotenv from "dotenv";
 import express from "express";
+import { migrateToLatest } from "./.config/migrations/index.ts";
 
-const dotenv = require("dotenv");
 dotenv.config();
 
 const app = express();
@@ -15,21 +16,9 @@ app.listen(port, () => {
   console.log(`App running on http://localhost:${port}`);
 });
 
-// const pg = require("knex")({ client: "pg",
-//   connection: {
-//     host: process.env.DB_HOST,
-//     user: process.env.DB_USER,
-//     password: process.env.DB_PASSWORD,
-//     database: process.env.DB_NAME,
-//     port: 5432,
-//   },
+// await GoalsRepository.createGoal({
+//   id: 1,
+//   goal: "Create a table and a row",
 // });
 
-// pg.raw("SELECT 1")
-//   .then(() => {
-//     console.log("✅ Connection to PostgreSQL successful!");
-//   })
-//   .catch((err: Error) => {
-//     console.error("❌ Connection failed! Check your connection string.");
-//     console.error(err.message);
-//   });
+migrateToLatest();
