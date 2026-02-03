@@ -1,24 +1,18 @@
+import { promises as fs } from "fs";
 import {
   FileMigrationProvider,
   Kysely,
   Migrator,
   PostgresDialect,
 } from "kysely";
-import { Pool } from "pg";
-import { promises as fs } from "fs";
 import * as path from "path";
+import { dbCredentials } from "../../database.ts";
 import type { Database } from "../../types.ts";
 
 export async function migrateToLatest() {
   const db = new Kysely<Database>({
     dialect: new PostgresDialect({
-      pool: new Pool({
-        host: process.env.DB_HOST,
-        database: process.env.DB_NAME,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        port: 5432,
-      }),
+      pool: dbCredentials,
     }),
   });
 
