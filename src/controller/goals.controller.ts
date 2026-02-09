@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { GoalsRepository } from "../GoalsRepository.ts";
+import { GoalsRepository } from "../goals.repository.ts";
 
 class GoalsController {
   async getAllGoals(req: Request, res: Response): Promise<void> {
