@@ -23,10 +23,10 @@ export default defineConfig({
     },
   },
   migrations: {
-    migrationFolder: "migrations",
+    migrationFolder: "config/migrations",
   },
   //   plugins: [],
-  //   seeds: {
-  //     seedFolder: "seeds",
-  //   }
+  seeds: {
+    seedFolder: "seeds",
+  },
 });

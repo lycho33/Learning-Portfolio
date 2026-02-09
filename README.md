@@ -24,6 +24,11 @@
 
 `npx kysely migrate:make <migration_name>`
 
+#### Seeds
+
+- Create seed file: `npx kysely seed:make <file_name>`
+- Run seeds: `npm run seed`
+
 ### Testing Server Connection
 
 `curl http://localhost:3030`

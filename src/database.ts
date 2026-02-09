@@ -1,6 +1,6 @@
 import { Kysely, PostgresDialect } from "kysely";
+import type { DB } from "kysely-codegen";
 import { Pool } from "pg";
-import type { Database } from "./types.ts"; // this is the Database interface we defined earlier
 
 export const dbCredentials = new Pool({
   database: process.env.DB_NAME,
@@ -19,6 +19,6 @@ const dialect = new PostgresDialect({
 // knows your database structure.
 // Dialect is passed to Kysely's constructor, and from now on, Kysely knows how
 // to communicate with your database.
-export const db = new Kysely<Database>({
+export const db = new Kysely<DB>({
   dialect,
 });

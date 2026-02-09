@@ -6,8 +6,11 @@ import {
   PostgresDialect,
 } from "kysely";
 import * as path from "path";
-import { dbCredentials } from "../../database.ts";
-import type { Database } from "../../types.ts";
+import { fileURLToPath } from "url";
+import { dbCredentials } from "../../src/database.ts";
+import type { Database } from "../../src/types.ts";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export async function migrateToLatest() {
   const db = new Kysely<Database>({
@@ -21,7 +24,7 @@ export async function migrateToLatest() {
     provider: new FileMigrationProvider({
       fs,
       path,
-      migrationFolder: "/src/.config/migrations",
+      migrationFolder: __dirname,
     }),
   });
 
@@ -29,14 +32,16 @@ export async function migrateToLatest() {
 
   results?.forEach((it) => {
     if (it.status === "Success") {
-      console.log(`migration "${it.migrationName}" was executed successfully`);
+      console.log(
+        `✅ Migration "${it.migrationName}" was executed successfully`,
+      );
     } else if (it.status === "Error") {
-      console.error(`failed to execute migration "${it.migrationName}"`);
+      console.error(`❌ Failed to execute migration "${it.migrationName}"`);
     }
   });
 
   if (error) {
-    console.error("failed to migrate");
+    console.error("❌ Failed to migrate");
     console.error(error);
     process.exit(1);
   }
