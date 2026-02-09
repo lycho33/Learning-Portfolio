@@ -16,7 +16,6 @@ class GoalsController {
   async createGoal(req: Request, res: Response): Promise<void> {
     try {
       const newGoal = await GoalsRepository.createGoal({
-        id: req.body.id,
         goal: req.body.goal,
       });
       res.status(201).json(newGoal);

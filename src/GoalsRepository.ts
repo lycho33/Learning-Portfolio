@@ -1,26 +1,29 @@
-import type { Insertable, Updateable } from "kysely";
+import type { DeleteResult } from "kysely";
 import { db } from "./database.ts";
-import type { Goals } from "./types.ts";
+import type { Goals, GoalUpdate, NewGoal } from "./types.ts";
 
 export const GoalsRepository = {
-  getGoals: async () => {
+  getGoals: async (): Promise<Goals[]> => {
     return await db.selectFrom("goals").selectAll("goals").execute();
   },
-  getGoal: async (goal: string) => {
+  getGoal: async (goal: string): Promise<Goals | undefined> => {
     return await db
       .selectFrom("goals")
       .selectAll()
       .where("goal", "=", goal)
       .executeTakeFirst();
   },
-  createGoal: async (goal: Insertable<Goals>) => {
+  createGoal: async (goal: NewGoal): Promise<Goals | undefined> => {
     return await db
       .insertInto("goals")
       .values(goal)
       .returningAll()
       .executeTakeFirstOrThrow();
   },
-  updateGoal: async (id: number, goal: Updateable<Goals>) => {
+  updateGoal: async (
+    id: number,
+    goal: GoalUpdate,
+  ): Promise<Goals | undefined> => {
     return await db
       .updateTable("goals")
       .set(goal)
@@ -28,7 +31,7 @@ export const GoalsRepository = {
       .returning(["goal", "id"])
       .executeTakeFirstOrThrow();
   },
-  deleteGoal: async (goal: string) => {
+  deleteGoal: async (goal: string): Promise<DeleteResult> => {
     return await db
       .deleteFrom("goals")
       .where("goal", "=", goal)

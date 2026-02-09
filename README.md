@@ -36,5 +36,5 @@
 ```
 curl -X POST http://localhost:3030/goal \
      -H "Content-Type: application/json" \
-     -d '{"id": 2, "goal": "test"}'
+     -d '{"goal": "test"}'
 ```
