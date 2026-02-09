@@ -8,9 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsx src/index.ts",
     "dev": "tsx watch src/index.ts",
-    "generate:db-schema-types": "npx $DATABASE_URL kysely-codegen",
-    "seed": "npx kysely seed:run",
-    "remove-migration-record": "tsx scripts/remove-migration-record.ts"
+    "generate:db-schema-types": "npx $DATABASE_URL kysely-codegen"
   },
   "keywords": [],
   "author": "",

@@ -32,3 +32,9 @@
 ### Testing Server Connection
 
 `curl http://localhost:3030`
+
+```
+curl -X POST http://localhost:3030/goal \
+     -H "Content-Type: application/json" \
+     -d '{"id": 2, "goal": "test"}'
+```

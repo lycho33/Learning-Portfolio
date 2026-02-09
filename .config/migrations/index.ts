@@ -6,16 +6,26 @@ import {
   PostgresDialect,
 } from "kysely";
 import * as path from "path";
+import { Pool } from "pg";
 import { fileURLToPath } from "url";
-import { dbCredentials } from "../../src/database.ts";
 import type { Database } from "../../src/types.ts";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export async function migrateToLatest() {
+  // Needs to be a separate instance of database.ts to avoid tearing down the DB connection when running queries
+  const migrationPool = new Pool({
+    database: process.env.DB_NAME,
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    port: 5432,
+    max: 10,
+  });
+
   const db = new Kysely<Database>({
     dialect: new PostgresDialect({
-      pool: dbCredentials,
+      pool: migrationPool,
     }),
   });
 
