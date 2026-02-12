@@ -21,13 +21,14 @@ export const GoalsRepository = {
       .executeTakeFirstOrThrow();
   },
   updateGoal: async (
-    id: number,
     goal: GoalUpdate,
+    newGoal: string,
   ): Promise<Goals | undefined> => {
+    const originalGoal = goal.goal || "";
     return await db
       .updateTable("goals")
-      .set(goal)
-      .where("id", "=", id)
+      .set({ goal: newGoal })
+      .where("goal", "=", originalGoal)
       .returning(["goal", "id"])
       .executeTakeFirstOrThrow();
   },

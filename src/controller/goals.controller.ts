@@ -13,6 +13,19 @@ class GoalsController {
         .json({ success: false, message: "Failed to fetch goals" });
     }
   }
+  async getGoal(req: Request, res: Response): Promise<void> {
+    console.log("req: ", req.body);
+    try {
+      const goal = await GoalsRepository.getGoal(req.body.goal);
+      res.status(200).json(goal);
+    } catch (e) {
+      console.warn(e);
+      res.status(500).json({
+        success: false,
+        message: `Failed to fetch goal`,
+      });
+    }
+  }
   async createGoal(req: Request, res: Response): Promise<void> {
     try {
       const newGoal = await GoalsRepository.createGoal({
@@ -24,6 +37,30 @@ class GoalsController {
       res
         .status(500)
         .json({ success: false, message: "Failed to create goal" });
+    }
+  }
+  async updateGoal(req: Request, res: Response): Promise<void> {
+    const { goal, newGoal } = req.body;
+    try {
+      const updatedGoal = await GoalsRepository.updateGoal({ goal }, newGoal);
+      res.status(201).json(updatedGoal);
+    } catch (e) {
+      console.warn(e);
+      res
+        .status(500)
+        .json({ success: false, message: "Failed to update goal" });
+    }
+  }
+  async deleteGoal(req: Request, res: Response): Promise<void> {
+    const goal = req.body.goal;
+    try {
+      await GoalsRepository.deleteGoal(goal);
+      res.status(200);
+    } catch (e) {
+      console.warn(e);
+      res
+        .status(500)
+        .json({ success: false, message: "Failed to delete goal" });
     }
   }
 }

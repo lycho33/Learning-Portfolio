@@ -14,7 +14,10 @@ app.get("/", (req, res) => {
 });
 
 app.get("/goals", GoalsController.getAllGoals);
+app.get("/goal", GoalsController.getGoal);
 app.post("/goal", GoalsController.createGoal);
+app.put("/goal", GoalsController.updateGoal); // replace entire goal with PUT
+app.delete("/goal", GoalsController.deleteGoal);
 
 app.listen(port, () => {
   console.log(`App running on http://localhost:${port}`);
